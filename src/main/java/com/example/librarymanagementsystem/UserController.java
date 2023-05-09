@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,5 +58,19 @@ public class UserController {
         // userService.deleteUserById(id);
     }
 
-    
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@RequestBody User user) throws NoSuchAlgorithmException {
+        Optional<User> foundUser = userService.userByEmail(user.getEmail());
+        System.out.println(user);
+        if (foundUser.isPresent()) {
+            User userFromDb = foundUser.get();
+            if (userFromDb.encryptPassword(user.getPassword()).equals(userFromDb.getPassword())) {
+                return ResponseEntity.ok(userFromDb);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }

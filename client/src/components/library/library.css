@@ -1,0 +1,24 @@
+.gpt3__dashboard {
+  display: flex;
+}
+.section__padding {
+  padding: 2rem 6rem;
+}
+.gpt3__dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: var(--font-family);
+  font-size: 20px;
+  line-height: 27px;
+  color: white;
+}
+.table {
+  margin-top: 1rem;
+  color: white;
+}
+.table td {
+  font-size: 18px;
+}
