@@ -1,59 +1,67 @@
 import React, { useEffect, useState } from "react";
-import api from "../../api/axiosConfig";
 import { useNavigate } from "react-router-dom";
-
-const Dashboard = ({ loggedIn }) => {
-  console.log(loggedIn);
-
+import api from "../../api/axiosConfig";
+import "./dashboard.css";
+const Dashboard = ({ loggedIn, user, handleRenew }) => {
+  // console.log(borrows);
+  const [borrows, setBorrows] = useState([]);
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const userId = user.id;
   const navigate = useNavigate();
-
-  // async () => {
-  //   try {
-  //     const response = await api.get("/api/borrows");
-  //     console.log(response.data);
-  //     setBorrowedBooks(response.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   useEffect(() => {
     if (!loggedIn) {
       navigate("/login");
+    } else {
+      api
+        .get(`/api/borrows/user/${userId}`)
+        .then((response) => {
+          setBorrows(response.data);
+          const bookIds = response.data.map((borrow) => borrow.bookId);
+          Promise.all(bookIds.map((bookId) => api.get(`/api/books/${bookId}`)))
+            .then((bookResponses) => {
+              const borrowedBooks = bookResponses.map(
+                (response) => response.data
+              );
+              setBorrowedBooks(borrowedBooks);
+            })
+            .catch((error) => console.log(error));
+        })
+        .catch((error) => console.log(error));
     }
-    // else {
-    //   console.log("else");
-    //   getBorrowedBooks();
-    // }
-  }, [loggedIn, navigate]);
+  }, [loggedIn, navigate, userId]);
 
   return (
     <div className="gpt3__dashboard section__padding">
       <div className="gpt3__dashboard-content">
-        <h2>Dashboard</h2>
-        <h3>Borrowed Books</h3>
-        {/* <table>
+        <h3 className="gradient__text">Borrowed Books</h3>
+        <table className="table">
           <thead>
             <tr>
-              <th>Title</th>
+              <th className="title">Title</th>
               <th>Author</th>
-              <th>Due Date</th>
+              <th className="due-date">Due Date</th>
               <th>Renew</th>
             </tr>
           </thead>
           <tbody>
-            {borrowedBooks.map((book) => (
-              <tr key={book._id}>
-                <td>{book.title}</td>
+            {borrowedBooks.map((book, index) => (
+              <tr key={book.id}>
+                <td className="title">{book.title}</td>
                 <td>{book.author}</td>
-                <td>{book.dueDate}</td>
+                <td className="due-date">{borrows[index].returnDate}</td>
                 <td>
-                  <button onClick={() => handleRenew(book._id)}>Renew</button>
+                  <button
+                    className="btn btn-sm btn-secondary"
+                    onClick={() => handleRenew(book.id)}
+                  >
+                    Renew
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </table> */}
+        </table>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const Dashboard = ({ loggedIn, books, onBorrow }) => {
         <table className="table">
           <thead>
             <tr>
-              <th>Title</th>
+              <th className="title">Title</th>
               <th>Author</th>
               <th>Edition</th>
               <th>Year</th>
@@ -39,15 +39,6 @@ const Dashboard = ({ loggedIn, books, onBorrow }) => {
                 <td>{book.author}</td>
                 <td>{book.edition}</td>
                 <td>{book.year}</td>
-
-                {/* <td>
-                  <button
-                    onClick={() => onBorrow(book)}
-                    className="btn btn-info btn-sm"
-                  >
-                    Borrow
-                  </button>
-                </td> */}
               </tr>
             ))}
           </tbody>

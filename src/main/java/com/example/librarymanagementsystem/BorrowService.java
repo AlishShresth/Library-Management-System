@@ -24,7 +24,7 @@ public class BorrowService {
         return borrowRepository.findAll();
     }
     
-    public Optional<Borrow> borrowsByUserId(String userId){
+    public Optional<List<Borrow>> borrowsByUserId(String userId){
         return borrowRepository.findBorrowsByUserIdRegex(userId);
     }
     

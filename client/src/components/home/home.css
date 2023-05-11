@@ -1,6 +1,7 @@
 .gpt3__header {
   display: flex;
-  height: 80vh;
+  min-height: 80vh;
+  height: 100%;
 }
 .gpt3__header-content {
   flex: 1;
@@ -17,6 +18,7 @@
   font-size: 62px;
   line-height: 75px;
   letter-spacing: -0.04em;
+  padding-top: 2rem;
 }
 .gpt3__header-content p {
   font-family: var(--font-family);

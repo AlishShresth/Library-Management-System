@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -94,7 +93,7 @@ public class BookController {
         Optional<User> optionalUser = userService.userById(userId);
 
         if(optionalBook.isPresent() && optionalUser.isPresent()){
-            Book book = optionalBook.get();
+            Book book = optionalBook.get( );
             User user = optionalUser.get();
 
             // Check if book is already borrowed

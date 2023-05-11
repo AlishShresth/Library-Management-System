@@ -25,12 +25,12 @@ public class BorrowController {
         return new ResponseEntity<List<Borrow>>(borrowService.allBorrows(),HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<Borrow>> getBorrowById(@PathVariable("id") String id)  {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Optional<List<Borrow>>> getBorrowById(@PathVariable("userId") String userId)  {
         // ObjectId objectId = new ObjectId(id);
         // return borrowRepository.findBorrowById(objectId)
         //         .orElseThrow(() -> new ResourceNotFoundException("Borrow not found with id: " + id));
-        return new ResponseEntity<Optional<Borrow>>(borrowService.borrowsByUserId(id), HttpStatus.OK);
+        return new ResponseEntity<Optional<List<Borrow>>>(borrowService.borrowsByUserId(userId), HttpStatus.OK);
     }
 
     @PostMapping

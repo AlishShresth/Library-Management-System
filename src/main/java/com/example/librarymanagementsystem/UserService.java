@@ -32,6 +32,10 @@ public class UserService {
     
     }
     public User addUser(User user) {
+        try{
+        user.setPassword(user.getPassword());}catch(Exception e){
+            System.out.println(e);
+        }
         return userRepository.save(user);
     }
 

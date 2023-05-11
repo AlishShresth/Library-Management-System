@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface BorrowRepository extends MongoRepository<Borrow, ObjectId> {
-    Optional<Borrow> findBorrowsByUserIdRegex(String userId);
+    Optional<List<Borrow>> findBorrowsByUserIdRegex(String userId);
     Optional<Borrow> findBorrowByIdRegex(ObjectId id);
 
 }

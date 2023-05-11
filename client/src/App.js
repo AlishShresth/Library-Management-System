@@ -15,7 +15,7 @@ const App = () => {
   const [books, setBooks] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
-
+  const [user, setUser] = useState({});
   const getUsers = async () => {
     console.log("getUsers called");
     try {
@@ -54,6 +54,23 @@ const App = () => {
   const handleBorrow = (book) => {
     console.log(book.title);
   };
+  const handleRenew = (bookId) => {
+    const borrow = borrows.find((b) => b.bookId === bookId);
+    const borrowId = borrow.id;
+    console.log(borrowId);
+    const newReturnDate = new Date();
+    newReturnDate.setDate(newReturnDate.getDate() + 7); // Renew for 7 days
+
+    api
+      .put(`/api/borrows/${borrowId}`, { returnDate: newReturnDate })
+      .then((response) => {
+        const updatedBorrows = [...borrows];
+        const index = updatedBorrows.findIndex((b) => b._id === borrowId);
+        updatedBorrows[index].returnDate = newReturnDate;
+        setBorrows(updatedBorrows);
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="App">
       <div className="gradient__bg">
@@ -63,15 +80,22 @@ const App = () => {
           <Route path="/" exact element={<Home />} />
           <Route
             path="/login"
-            element={<LoginForm setLoggedIn={setLoggedIn} />}
+            element={<LoginForm setLoggedIn={setLoggedIn} setUser={setUser} />}
           />
           <Route
             path="/register"
-            element={<Register setLoggedIn={setLoggedIn} />}
+            element={<Register setLoggedIn={setLoggedIn} setUser={setUser} />}
           />
           <Route
             path="/dashboard"
-            element={<Dashboard loggedIn={loggedIn} />}
+            element={
+              <Dashboard
+                loggedIn={loggedIn}
+                borrows={borrowedBooks}
+                user={user}
+                handleRenew={handleRenew}
+              />
+            }
           />
           <Route
             path="/library"
