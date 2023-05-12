@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosConfig";
 import "./dashboard.css";
-const Dashboard = ({ loggedIn, user, handleRenew }) => {
+const Dashboard = ({ loggedIn, user, handleRenew, borrows, setBorrows }) => {
   // console.log(borrows);
-  const [borrows, setBorrows] = useState([]);
+  // const [borrows, setBorrows] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const userId = user.id;
   const navigate = useNavigate();

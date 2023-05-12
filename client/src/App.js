@@ -68,7 +68,7 @@ const App = () => {
 
     const newReturnDate = moment(borrow.returnDate)
       .add(14, "days")
-      .format("YYYY-MM-DDTHH:mm:ss");
+      .format("YYYY-MM-DD");
     console.log(
       `New return date for borrow with id ${borrowId}: ${newReturnDate}`
     );
@@ -110,6 +110,7 @@ const App = () => {
               <Dashboard
                 loggedIn={loggedIn}
                 borrows={borrowedBooks}
+                setBorrows={setBorrowedBooks}
                 user={user}
                 handleRenew={handleRenew}
               />
