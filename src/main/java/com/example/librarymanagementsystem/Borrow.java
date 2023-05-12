@@ -17,13 +17,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Borrow {
     @Id
-    private ObjectId id;
+    private String id;
     private String bookId;
     private String userId;
     private Date borrowDate;
     private Date returnDate;
 
-    public Borrow(@JsonProperty("id")ObjectId id, @JsonProperty("bookId") String bookId, @JsonProperty("userId") String userId, @JsonProperty("borrowDate") LocalDate borrowDate, @JsonProperty("returnDate") LocalDate returnDate) {
+    public Borrow(@JsonProperty("id")String id, @JsonProperty("bookId") String bookId, @JsonProperty("userId") String userId, @JsonProperty("borrowDate") LocalDate borrowDate, @JsonProperty("returnDate") LocalDate returnDate) {
         this.id=id;
         this.bookId = bookId;
         this.userId = userId;

@@ -43,6 +43,8 @@ public class BorrowController {
     @PutMapping("/{id}")
     public ResponseEntity<Borrow> updateBorrow(@PathVariable("id") String id, @RequestBody Borrow borrowData) throws ResourceNotFoundException {
         ObjectId objectId = new ObjectId(id);
+        System.out.println(objectId);
+        System.out.println(borrowData);
         Borrow borrow = borrowService.borrowsById(objectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Borrow not found with id: " + id));
         borrow.setBookId(borrowData.getBookId());

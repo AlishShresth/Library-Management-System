@@ -29,7 +29,7 @@ public class BorrowService {
     }
     
     public Optional<Borrow> borrowsById(ObjectId id){
-        return borrowRepository.findBorrowByIdRegex(id);
+        return borrowRepository.findBorrowById(id);
     }
     
     public void borrowBook(Borrow borrow) {

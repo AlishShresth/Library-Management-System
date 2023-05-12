@@ -10,6 +10,7 @@ import Register from "./components/login/Register";
 import Library from "./components/library/Library";
 import NotFound from "./components/NotFound";
 import Dashboard from "./components/dashboard/Dashboard";
+import moment from "moment";
 
 const App = () => {
   const [books, setBooks] = useState([]);
@@ -54,23 +55,40 @@ const App = () => {
   const handleBorrow = (book) => {
     console.log(book.title);
   };
-  const handleRenew = (bookId) => {
-    const borrow = borrows.find((b) => b.bookId === bookId);
+  const handleRenew = (borrowBookId) => {
+    console.log(borrowedBooks);
+    const borrow = borrowedBooks.find((b) => b.bookId === borrowBookId);
+    console.log(borrowBookId);
     const borrowId = borrow.id;
     console.log(borrowId);
-    const newReturnDate = new Date();
-    newReturnDate.setDate(newReturnDate.getDate() + 7); // Renew for 7 days
+    if (!borrow) {
+      console.log(`No borrow found for borrow with id: ${borrowBookId}`);
+      return;
+    }
 
+    const newReturnDate = moment(borrow.returnDate)
+      .add(14, "days")
+      .format("YYYY-MM-DDTHH:mm:ss");
+    console.log(
+      `New return date for borrow with id ${borrowId}: ${newReturnDate}`
+    );
     api
-      .put(`/api/borrows/${borrowId}`, { returnDate: newReturnDate })
-      .then((response) => {
-        const updatedBorrows = [...borrows];
-        const index = updatedBorrows.findIndex((b) => b._id === borrowId);
-        updatedBorrows[index].returnDate = newReturnDate;
-        setBorrows(updatedBorrows);
+      .put(`/api/borrows/${borrowId}`, {
+        ...borrow,
+        returnDate: newReturnDate,
       })
-      .catch((error) => console.log(error));
+      .then(() => {
+        setBorrowedBooks((prevBorrows) =>
+          prevBorrows.map((b) =>
+            b.id === borrowId ? { ...b, returnDate: newReturnDate } : b
+          )
+        );
+      })
+      .catch((err) => {
+        console.log(`Error renewing borrow with id ${borrowId}:`, err);
+      });
   };
+
   return (
     <div className="App">
       <div className="gradient__bg">

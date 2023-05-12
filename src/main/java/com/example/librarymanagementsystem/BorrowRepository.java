@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface BorrowRepository extends MongoRepository<Borrow, ObjectId> {
     Optional<List<Borrow>> findBorrowsByUserIdRegex(String userId);
-    Optional<Borrow> findBorrowByIdRegex(ObjectId id);
+    Optional<Borrow> findBorrowById(ObjectId id);
 
 }
