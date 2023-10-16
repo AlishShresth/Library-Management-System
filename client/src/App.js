@@ -22,7 +22,7 @@ const App = () => {
     try {
       const response = await api.get("/api/users");
       console.log(response.data);
-      setBooks(response.data);
+      setUser(response.data);
     } catch (err) {
       console.log(err);
     }

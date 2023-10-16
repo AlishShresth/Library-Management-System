@@ -32,8 +32,7 @@ public class UserController {
 
     @GetMapping("/email/{email}")
     public ResponseEntity<Optional<User>> getUserByEmail(@PathVariable String email) {
-        // return userService.getUserByEmail(email)
-        //         .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+
         return new ResponseEntity<Optional<User>>(userService.userByEmail(email),HttpStatus.OK);
     }
     
@@ -42,9 +41,6 @@ public class UserController {
         User addedUser = userService.addUser(user);
         return new ResponseEntity<>(addedUser, HttpStatus.CREATED);
     }
-    // public void addUser(@RequestBody User user) {
-    //     userService.addUser(user);
-    // }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable String id) {
